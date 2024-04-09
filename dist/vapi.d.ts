@@ -35,7 +35,7 @@ export default class Vapi extends VapiEventEmitter {
     private averageSpeechLevel;
     constructor(apiToken: string, apiBaseUrl?: string);
     private cleanup;
-    start(assistant: CreateAssistantDTO | string): Promise<Call | null>;
+    start(assistant: CreateAssistantDTO | string, audioSource?: string | boolean): Promise<Call | null>;
     private onAppMessage;
     private handleRemoteParticipantsAudioLevel;
     stop(): void;
@@ -48,5 +48,6 @@ export default class Vapi extends VapiEventEmitter {
         videoDeviceId?: string | false | null;
         videoSource?: MediaStreamTrack | false;
     }): Promise<import("@daily-co/daily-js").DailyDeviceInfos> | undefined;
+    getMicrophoneDevice(): Promise<import("@daily-co/daily-js").DailyDeviceInfos> | undefined;
 }
 export {};
