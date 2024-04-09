@@ -267,4 +267,14 @@ export default class Vapi extends VapiEventEmitter {
       throw error;
     }
   }
+
+  public updateInputDevice(devices: {
+    audioDeviceId?: string | false | null;
+    audioSource?: MediaStreamTrack | false;
+    videoDeviceId?: string | false | null;
+    videoSource?: MediaStreamTrack | false;
+  }) {
+    if (!this.call) return;
+    return this.call.setInputDevicesAsync(devices)
+  }
 }
