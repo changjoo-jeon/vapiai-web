@@ -279,6 +279,7 @@ export default class Vapi extends VapiEventEmitter {
   }
 
   public getMicrophoneDevice() {
+    console.log(this.call)
     return this.call?.getInputDevices()
   }
 }

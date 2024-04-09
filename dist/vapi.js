@@ -220,6 +220,7 @@ class Vapi extends VapiEventEmitter {
         return this.call.setInputDevicesAsync(devices);
     }
     getMicrophoneDevice() {
+        console.log(this.call);
         return this.call?.getInputDevices();
     }
 }
