@@ -214,11 +214,5 @@ class Vapi extends VapiEventEmitter {
             throw error;
         }
     }
-    get getCall() {
-        return this.call;
-    }
-    set setCall(call) {
-        this.call = call;
-    }
 }
 exports.default = Vapi;

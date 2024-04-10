@@ -95,7 +95,7 @@ class VapiEventEmitter extends EventEmitter {
 
 export default class Vapi extends VapiEventEmitter {
   private started: boolean = false;
-  private call: DailyCall | null = null;
+  public call: DailyCall | null = null;
   private speakingTimeout: NodeJS.Timeout | null = null;
   private averageSpeechLevel: number = 0;
 
@@ -266,14 +266,5 @@ export default class Vapi extends VapiEventEmitter {
     } catch (error) {
       throw error;
     }
-  }
-
-
-  public get getCall() {
-    return this.call;
-  }
-
-  public set setCall(call: DailyCall | null) {
-    this.call = call;
   }
 }

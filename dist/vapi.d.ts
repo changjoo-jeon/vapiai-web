@@ -31,7 +31,7 @@ declare class VapiEventEmitter extends EventEmitter {
 }
 export default class Vapi extends VapiEventEmitter {
     private started;
-    private call;
+    call: DailyCall | null;
     private speakingTimeout;
     private averageSpeechLevel;
     constructor(apiToken: string, apiBaseUrl?: string);
@@ -43,7 +43,5 @@ export default class Vapi extends VapiEventEmitter {
     send(message: VapiClientToServerMessage): void;
     setMuted(mute: boolean): void;
     isMuted(): boolean;
-    get getCall(): DailyCall | null;
-    set setCall(call: DailyCall | null);
 }
 export {};
