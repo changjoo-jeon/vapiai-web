@@ -36,12 +36,18 @@ export default class Vapi extends VapiEventEmitter {
     private averageSpeechLevel;
     constructor(apiToken: string, apiBaseUrl?: string);
     private cleanup;
-    start(assistant: CreateAssistantDTO | string, audioSource?: string | boolean): Promise<Call | null>;
+    start(assistant: CreateAssistantDTO | string, audioDeviceId: string): Promise<Call | null>;
     private onAppMessage;
     private handleRemoteParticipantsAudioLevel;
     stop(): void;
     send(message: VapiClientToServerMessage): void;
     setMuted(mute: boolean): void;
     isMuted(): boolean;
+    getAudioDevices(): Promise<{
+        devices: MediaDeviceInfo[];
+    }> | {
+        devices: never[];
+    };
+    setAudioDevice(audioDeviceId: string): void;
 }
 export {};

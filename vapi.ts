@@ -112,7 +112,7 @@ export default class Vapi extends VapiEventEmitter {
     this.speakingTimeout = null;
   }
 
-  async start(assistant: CreateAssistantDTO | string, audioSource: string | boolean = true): Promise<Call | null> {
+  async start(assistant: CreateAssistantDTO | string, audioDeviceId: string): Promise<Call | null> {
     if (this.started) {
       return null;
     }
@@ -131,9 +131,10 @@ export default class Vapi extends VapiEventEmitter {
         this.cleanup();
       }
       this.call = DailyIframe.createCallObject({
-        audioSource,
+        audioSource: false,
         videoSource: false,
       });
+      this.call.setInputDevicesAsync({ audioDeviceId })
       this.call.iframe()?.style.setProperty('display', 'none');
 
       this.call.on('left-meeting', () => {
@@ -266,5 +267,21 @@ export default class Vapi extends VapiEventEmitter {
     } catch (error) {
       throw error;
     }
+  }
+
+  public getAudioDevices() {
+    if (!this.call) {
+      return {devices: []};
+    }
+
+    return this.call.enumerateDevices();
+  }
+
+  public setAudioDevice(audioDeviceId: string) {
+    if (!this.call) {
+      return;
+    }
+
+    this.call.setInputDevicesAsync({ audioDeviceId });
   }
 }
