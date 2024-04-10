@@ -214,14 +214,11 @@ class Vapi extends VapiEventEmitter {
             throw error;
         }
     }
-    updateInputDevice(devices) {
-        if (!this.call)
-            return;
-        return this.call.setInputDevicesAsync(devices);
+    get getCall() {
+        return this.call;
     }
-    getMicrophoneDevice() {
-        console.log(this.call);
-        return this.call?.getInputDevices();
+    set setCall(call) {
+        this.call = call;
     }
 }
 exports.default = Vapi;

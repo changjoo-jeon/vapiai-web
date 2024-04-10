@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { Call, CreateAssistantDTO } from './api';
+import { DailyCall } from '@daily-co/daily-js';
 import type { ChatCompletionMessageParam } from 'openai/resources';
 import EventEmitter from 'events';
 export interface AddMessageMessage {
@@ -42,12 +43,7 @@ export default class Vapi extends VapiEventEmitter {
     send(message: VapiClientToServerMessage): void;
     setMuted(mute: boolean): void;
     isMuted(): boolean;
-    updateInputDevice(devices: {
-        audioDeviceId?: string | false | null;
-        audioSource?: MediaStreamTrack | false;
-        videoDeviceId?: string | false | null;
-        videoSource?: MediaStreamTrack | false;
-    }): Promise<import("@daily-co/daily-js").DailyDeviceInfos> | undefined;
-    getMicrophoneDevice(): Promise<import("@daily-co/daily-js").DailyDeviceInfos> | undefined;
+    get getCall(): DailyCall | null;
+    set setCall(call: DailyCall | null);
 }
 export {};

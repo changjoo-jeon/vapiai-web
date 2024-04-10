@@ -268,18 +268,12 @@ export default class Vapi extends VapiEventEmitter {
     }
   }
 
-  public updateInputDevice(devices: {
-    audioDeviceId?: string | false | null;
-    audioSource?: MediaStreamTrack | false;
-    videoDeviceId?: string | false | null;
-    videoSource?: MediaStreamTrack | false;
-  }) {
-    if (!this.call) return;
-    return this.call.setInputDevicesAsync(devices)
+
+  public get getCall() {
+    return this.call;
   }
 
-  public getMicrophoneDevice() {
-    console.log(this.call)
-    return this.call?.getInputDevices()
+  public set setCall(call: DailyCall | null) {
+    this.call = call;
   }
 }
