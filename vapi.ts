@@ -174,12 +174,12 @@ export default class Vapi extends VapiEventEmitter {
         subscribeToTracksAutomatically: false,
       });
 
-      this.call.startRemoteParticipantsAudioLevelObserver(100);
+      this.call.startRemoteParticipantsAudioLevelObserver();
       this.call.on('remote-participants-audio-level', (e) => {
         if (e) this.handleRemoteParticipantsAudioLevel(e);
       });
 
-      this.call.startLocalAudioLevelObserver(100);
+      this.call.startLocalAudioLevelObserver();
       this.call.on('local-audio-level', (e) => {
         console.log('local-audio-level-vapi:', e)
         if (e) this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
@@ -290,5 +290,10 @@ export default class Vapi extends VapiEventEmitter {
     }
 
     this.call.setInputDevicesAsync({ audioDeviceId });
+  }
+
+  public getLocalAudioLevel() {
+    if (!this.call) return;
+    return this.call.getLocalAudioLevel();
   }
 }

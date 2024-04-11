@@ -50,5 +50,6 @@ export default class Vapi extends VapiEventEmitter {
         devices: never[];
     };
     setAudioDevice(audioDeviceId: string): void;
+    getLocalAudioLevel(): number | undefined;
 }
 export {};
