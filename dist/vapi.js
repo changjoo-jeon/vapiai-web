@@ -89,7 +89,7 @@ class Vapi extends VapiEventEmitter {
                 audioSource: false,
                 videoSource: false,
             });
-            this.call.setInputDevicesAsync({ audioDeviceId });
+            await this.call.setInputDevicesAsync({ audioDeviceId });
             this.call.iframe()?.style.setProperty('display', 'none');
             this.call.on('left-meeting', () => {
                 this.emit('call-end');
