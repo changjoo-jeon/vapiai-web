@@ -59,7 +59,8 @@ type VapiEventNames =
   | 'speech-start'
   | 'speech-end'
   | 'message'
-  | 'error';
+  | 'error'
+  | 'local-volume-level';
 
 type VapiEventListeners = {
   'call-end': () => void;
@@ -69,6 +70,7 @@ type VapiEventListeners = {
   'speech-end': () => void;
   message: (message: any) => void;
   error: (error: any) => void;
+  'local-volume-level': (volume: number) => void;
 };
 
 class VapiEventEmitter extends EventEmitter {
@@ -175,14 +177,13 @@ export default class Vapi extends VapiEventEmitter {
       this.call.startRemoteParticipantsAudioLevelObserver(100);
 
       this.call.on('remote-participants-audio-level', (e) => {
-        console.log('remote-participants-audio-level', console.log(e))
         if (e) this.handleRemoteParticipantsAudioLevel(e);
       });
 
       this.call.on('app-message', (e) => this.onAppMessage(e));
 
       this.call.on('local-audio-level', (e) => {
-        console.log('local-audio-level', e)
+        if (e) this.emit('local-volume-level', e.audioLevel)
       })
 
       this.call.updateInputSettings({

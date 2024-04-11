@@ -12,7 +12,7 @@ export interface ControlMessages {
     control: 'mute-assistant' | 'unmute-assistant';
 }
 type VapiClientToServerMessage = AddMessageMessage | ControlMessages;
-type VapiEventNames = 'call-end' | 'call-start' | 'volume-level' | 'speech-start' | 'speech-end' | 'message' | 'error';
+type VapiEventNames = 'call-end' | 'call-start' | 'volume-level' | 'speech-start' | 'speech-end' | 'message' | 'error' | 'local-volume-level';
 type VapiEventListeners = {
     'call-end': () => void;
     'call-start': () => void;
@@ -21,6 +21,7 @@ type VapiEventListeners = {
     'speech-end': () => void;
     message: (message: any) => void;
     error: (error: any) => void;
+    'local-volume-level': (volume: number) => void;
 };
 declare class VapiEventEmitter extends EventEmitter {
     on<E extends VapiEventNames>(event: E, listener: VapiEventListeners[E]): this;
