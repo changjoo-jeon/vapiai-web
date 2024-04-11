@@ -124,11 +124,12 @@ class Vapi extends VapiEventEmitter {
                 url: webCall.webCallUrl,
                 subscribeToTracksAutomatically: false,
             });
-            this.call.startRemoteParticipantsAudioLevelObserver(100);
+            this.call.startLocalAudioLevelObserver(100);
             this.call.on('local-audio-level', (e) => {
                 if (e)
                     this.emit('local-volume-level', Math.min(1, e.audioLevel / 0.15));
             });
+            this.call.startRemoteParticipantsAudioLevelObserver(100);
             this.call.on('remote-participants-audio-level', (e) => {
                 if (e)
                     this.handleRemoteParticipantsAudioLevel(e);
