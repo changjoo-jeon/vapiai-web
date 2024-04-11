@@ -73,6 +73,7 @@ class Vapi extends VapiEventEmitter {
         this.speakingTimeout = null;
     }
     async start(assistant, audioDeviceId) {
+        console.log('starting!');
         if (this.started) {
             return null;
         }
@@ -124,14 +125,13 @@ class Vapi extends VapiEventEmitter {
                 url: webCall.webCallUrl,
                 subscribeToTracksAutomatically: false,
             });
+            console.log('participants!');
             this.call.startRemoteParticipantsAudioLevelObserver();
             this.call.on('remote-participants-audio-level', (e) => {
                 if (e)
                     this.handleRemoteParticipantsAudioLevel(e);
             });
-            this.call.startLocalAudioLevelObserver();
-            this.call.startLocalAudioLevelObserver();
-            this.call.startLocalAudioLevelObserver();
+            console.log('local!');
             this.call.startLocalAudioLevelObserver();
             this.call.on('local-audio-level', (e) => {
                 if (e)
@@ -155,6 +155,7 @@ class Vapi extends VapiEventEmitter {
         }
     }
     handleLocalAudioLevel(e) {
+        console.log("Local Handler!");
         this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
     }
     onAppMessage(e) {
@@ -179,6 +180,7 @@ class Vapi extends VapiEventEmitter {
         }
     }
     handleRemoteParticipantsAudioLevel(e) {
+        console.log("Remote Handler!");
         const speechLevel = Object.values(e.participantsAudioLevel).reduce((a, b) => a + b, 0);
         this.emit('volume-level', Math.min(1, speechLevel / 0.15));
         const isSpeaking = speechLevel > 0.01;

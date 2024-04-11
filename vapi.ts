@@ -115,6 +115,7 @@ export default class Vapi extends VapiEventEmitter {
   }
 
   async start(assistant: CreateAssistantDTO | string, audioDeviceId: string): Promise<Call | null> {
+    console.log('starting!')
     if (this.started) {
       return null;
     }
@@ -174,14 +175,13 @@ export default class Vapi extends VapiEventEmitter {
         subscribeToTracksAutomatically: false,
       });
 
+      console.log('participants!')
       this.call.startRemoteParticipantsAudioLevelObserver();
       this.call.on('remote-participants-audio-level', (e) => {
         if (e) this.handleRemoteParticipantsAudioLevel(e);
       });
 
-      this.call.startLocalAudioLevelObserver();
-      this.call.startLocalAudioLevelObserver();
-      this.call.startLocalAudioLevelObserver();
+      console.log('local!')
       this.call.startLocalAudioLevelObserver();
       this.call.on('local-audio-level', (e) => {
         if (e) this.handleLocalAudioLevel(e)
@@ -207,6 +207,7 @@ export default class Vapi extends VapiEventEmitter {
   }
 
   private handleLocalAudioLevel(e: DailyEventObjectLocalAudioLevel) {
+    console.log("Local Handler!")
     this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
   }
 
@@ -229,6 +230,7 @@ export default class Vapi extends VapiEventEmitter {
   }
 
   private handleRemoteParticipantsAudioLevel(e: DailyEventObjectRemoteParticipantsAudioLevel) {
+    console.log("Remote Handler!")
     const speechLevel = Object.values(e.participantsAudioLevel).reduce((a, b) => a + b, 0);
 
     this.emit('volume-level', Math.min(1, speechLevel / 0.15));
