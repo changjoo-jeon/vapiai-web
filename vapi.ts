@@ -180,6 +180,10 @@ export default class Vapi extends VapiEventEmitter {
 
       this.call.on('app-message', (e) => this.onAppMessage(e));
 
+      this.call.on('local-audio-level', (e) => {
+        console.log('local-audio-level', e?.audioLevel)
+      })
+
       this.call.updateInputSettings({
         audio: {
           processor: {
