@@ -115,7 +115,6 @@ export default class Vapi extends VapiEventEmitter {
   }
 
   async start(assistant: CreateAssistantDTO | string, audioDeviceId: string): Promise<Call | null> {
-    console.log('starting!')
     if (this.started) {
       return null;
     }
@@ -175,17 +174,11 @@ export default class Vapi extends VapiEventEmitter {
         subscribeToTracksAutomatically: false,
       });
 
-      console.log('participants!')
       this.call.startRemoteParticipantsAudioLevelObserver();
       this.call.on('remote-participants-audio-level', (e) => {
         if (e) this.handleRemoteParticipantsAudioLevel(e);
       });
 
-      console.log('local!')
-      this.call.startLocalAudioLevelObserver();
-      this.call.on('local-audio-level', (e) => {
-        if (e) this.handleLocalAudioLevel(e)
-      })
 
       this.call.on('app-message', (e) => this.onAppMessage(e));
 
@@ -196,6 +189,11 @@ export default class Vapi extends VapiEventEmitter {
           },
         },
       });
+
+      this.call.startLocalAudioLevelObserver();
+      this.call.on('local-audio-level', (e) => {
+        if (e) this.handleLocalAudioLevel(e)
+      })
 
       return webCall;
     } catch (e) {
