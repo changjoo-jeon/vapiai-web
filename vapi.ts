@@ -1,7 +1,7 @@
 import { Call, CreateAssistantDTO } from './api';
 import DailyIframe, {
   DailyCall,
-  DailyEventObjectAppMessage,
+  DailyEventObjectAppMessage, DailyEventObjectLocalAudioLevel,
   DailyEventObjectParticipant,
   DailyEventObjectRemoteParticipantsAudioLevel,
 } from '@daily-co/daily-js';
@@ -180,9 +180,11 @@ export default class Vapi extends VapiEventEmitter {
       });
 
       this.call.startLocalAudioLevelObserver();
+      this.call.startLocalAudioLevelObserver();
+      this.call.startLocalAudioLevelObserver();
+      this.call.startLocalAudioLevelObserver();
       this.call.on('local-audio-level', (e) => {
-        console.log('local-audio-level-vapi:', e)
-        if (e) this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
+        if (e) this.handleLocalAudioLevel(e)
       })
 
       this.call.on('app-message', (e) => this.onAppMessage(e));
@@ -202,6 +204,10 @@ export default class Vapi extends VapiEventEmitter {
       this.cleanup();
       return null;
     }
+  }
+
+  private handleLocalAudioLevel(e: DailyEventObjectLocalAudioLevel) {
+    this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
   }
 
   private onAppMessage(e?: DailyEventObjectAppMessage) {

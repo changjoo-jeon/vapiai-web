@@ -38,6 +38,7 @@ export default class Vapi extends VapiEventEmitter {
     constructor(apiToken: string, apiBaseUrl?: string);
     private cleanup;
     start(assistant: CreateAssistantDTO | string, audioDeviceId: string): Promise<Call | null>;
+    private handleLocalAudioLevel;
     private onAppMessage;
     private handleRemoteParticipantsAudioLevel;
     stop(): void;

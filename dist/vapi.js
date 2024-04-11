@@ -130,10 +130,12 @@ class Vapi extends VapiEventEmitter {
                     this.handleRemoteParticipantsAudioLevel(e);
             });
             this.call.startLocalAudioLevelObserver();
+            this.call.startLocalAudioLevelObserver();
+            this.call.startLocalAudioLevelObserver();
+            this.call.startLocalAudioLevelObserver();
             this.call.on('local-audio-level', (e) => {
-                console.log('local-audio-level-vapi:', e);
                 if (e)
-                    this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
+                    this.handleLocalAudioLevel(e);
             });
             this.call.on('app-message', (e) => this.onAppMessage(e));
             this.call.updateInputSettings({
@@ -151,6 +153,9 @@ class Vapi extends VapiEventEmitter {
             this.cleanup();
             return null;
         }
+    }
+    handleLocalAudioLevel(e) {
+        this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
     }
     onAppMessage(e) {
         if (!e)
