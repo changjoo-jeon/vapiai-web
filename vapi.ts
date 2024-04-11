@@ -60,7 +60,6 @@ type VapiEventNames =
   | 'speech-end'
   | 'message'
   | 'error'
-  | 'local-audio-level';
 
 type VapiEventListeners = {
   'call-end': () => void;
@@ -70,7 +69,6 @@ type VapiEventListeners = {
   'speech-end': () => void;
   message: (message: any) => void;
   error: (error: any) => void;
-  'local-audio-level': (volume: number) => void;
 };
 
 class VapiEventEmitter extends EventEmitter {
@@ -190,11 +188,6 @@ export default class Vapi extends VapiEventEmitter {
         },
       });
 
-      this.call.startLocalAudioLevelObserver();
-      this.call.on('local-audio-level', (e) => {
-        if (e) this.handleLocalAudioLevel(e)
-      })
-
       return webCall;
     } catch (e) {
       console.error(e);
@@ -202,11 +195,6 @@ export default class Vapi extends VapiEventEmitter {
       this.cleanup();
       return null;
     }
-  }
-
-  private handleLocalAudioLevel(e: DailyEventObjectLocalAudioLevel) {
-    console.log("Local Handler!")
-    this.emit('local-audio-level', Math.min(1, e.audioLevel / 0.15));
   }
 
   private onAppMessage(e?: DailyEventObjectAppMessage) {
